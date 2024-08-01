@@ -1,0 +1,17 @@
+function result=post_calcium_imaging_pipeline(data)
+for i=1:600
+data_5(i,:)=mean([data(5*i-4,:),data(5*i-3,:),data(5*i-2,:),data(5*i-1,:),data(5*i,:)],2);
+end
+
+data_3=horzat(data_5(61:180,:),data_5(241:360,:),data_5(421:540,:));
+
+base=data_3(61:90,:);
+f0=mean(base,1);
+df=data_3./f0-1;
+
+for i=1:n %n is the amount of neurons;
+result.df(:,i)=mean([df(:,i),df(:,n+i),df(:,2*n+i)],2);
+end
+
+result.mean_df=mean(result.df,2);
+end
